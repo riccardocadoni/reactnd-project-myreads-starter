@@ -8,7 +8,6 @@ import Header from "./Header";
 import Bookshelf from "./Bookshelf";
 
 const Home = () => {
-  const [showSearchPage, setShowSearchPage] = useState(false);
   const [currentlyShelf, setCurrentlyShelf] = useState([]);
   const [wantShelf, setWantShelf] = useState([]);
   const [readShelf, setReadShelf] = useState([]);

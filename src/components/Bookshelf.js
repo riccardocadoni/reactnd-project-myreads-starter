@@ -1,6 +1,6 @@
 import React from "react";
 //components
-import Select from "./Select";
+import Book from "./Book";
 
 const BookShelf = ({ title, books, setRefresh }) => {
   return (
@@ -9,25 +9,7 @@ const BookShelf = ({ title, books, setRefresh }) => {
       <div className="bookshelf-books">
         <ol className="books-grid">
           {books.map((book) => {
-            return (
-              <li key={book.id}>
-                <div className="book">
-                  <div className="book-top">
-                    <div
-                      className="book-cover"
-                      style={{
-                        width: 128,
-                        height: 193,
-                        backgroundImage: `url(${book.imageLinks.thumbnail})`,
-                      }}
-                    />
-                    <Select book={book} setRefresh={setRefresh} />
-                  </div>
-                  <div className="book-title">{book.title}</div>
-                  <div className="book-authors">{book.authors}</div>
-                </div>
-              </li>
-            );
+            return <Book book={book} setRefresh={setRefresh} key={book.id} />;
           })}
         </ol>
       </div>
