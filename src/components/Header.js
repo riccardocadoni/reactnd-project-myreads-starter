@@ -1,5 +1,8 @@
 import React from "react";
 
+/**
+ * @description component that renders the Header
+ */
 const Header = () => {
   return (
     <div className="list-books-title">

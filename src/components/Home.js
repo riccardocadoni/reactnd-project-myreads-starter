@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import * as BooksAPI from "../BooksAPI";
+import React from "react";
 import { Link } from "react-router-dom";
 //style
 import "../App.css";
@@ -7,31 +6,14 @@ import "../App.css";
 import Header from "./Header";
 import Bookshelf from "./Bookshelf";
 
-const Home = () => {
-  const [currentlyShelf, setCurrentlyShelf] = useState([]);
-  const [wantShelf, setWantShelf] = useState([]);
-  const [readShelf, setReadShelf] = useState([]);
-  const [refresh, setRefresh] = useState(false);
-
-  useEffect(
-    () => {
-      let readArr = [];
-      let currArr = [];
-      let wantArr = [];
-      BooksAPI.getAll().then((res) => {
-        res.map((book) => {
-          book.shelf === "read" && readArr.push(book);
-          book.shelf === "currentlyReading" && currArr.push(book);
-          book.shelf === "wantToRead" && wantArr.push(book);
-        });
-        setReadShelf(readArr);
-        setWantShelf(wantArr);
-        setCurrentlyShelf(currArr);
-      });
-    },
-    [refresh]
-  );
-
+/**
+ * @description component that renders the Home page
+ * @param {function} setRefresh if set to true triggers the refresh of the main page,to update the books position
+ * @param {Array} currentlyShelf books in this shelf
+ * @param {Array} wantShelf books in this shelf
+ * @param {Array} readShelf books in this shelf
+ */
+const Home = ({ setRefresh, currentlyShelf, wantShelf, readShelf }) => {
   return (
     <div className="list-books">
       <Header />

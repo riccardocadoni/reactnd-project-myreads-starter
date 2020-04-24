@@ -4,19 +4,36 @@ import * as BooksAPI from "../BooksAPI";
 //components
 import Book from "./Book";
 
-const Search = () => {
+/**
+ * @description component that handle the search of books
+ * @param {function} setRefresh if set to true triggers the refresh of the main page,to update the books position
+ * @param {Array} currentlyShelf books in this shelf
+ * @param {Array} wantShelf books in this shelf
+ * @param {Array} readShelf books in this shelf
+ */
+const Search = ({ setRefresh, currentlyShelf, wantShelf, readShelf }) => {
   const [textInput, setTextInput] = useState("");
   const [books, setBooks] = useState([]);
   const [queryErr, setQueryErr] = useState(false);
 
+  /**
+   * @description function to empty the books state if the text in the search box is empty
+   */
+  if (textInput === "" && books.length) {
+    setBooks([]);
+    setQueryErr(false);
+  }
+  /**
+   * @description function that makes the api call to search books
+   */
   useEffect(
     () => {
-      if (textInput === "") setBooks([]);
       textInput &&
         BooksAPI.search(textInput)
           .then((res) => {
+            //if the query gets no results
             if (res.error) setQueryErr(true);
-            if (Array.isArray(res)) {
+            else {
               setBooks(res);
               if (queryErr) setQueryErr(false);
             }
@@ -49,9 +66,26 @@ const Search = () => {
       ) : (
         <div className="search-books-results">
           <ol className="books-grid">
-            {books.map((book) => (
-              <Book book={book} key={book.id} />
-            ))}
+            {books.map((book) => {
+              let shelf = null;
+              /**
+               * check if the book is currently in one of the personal shelf
+               * if is the case,the component passes the shelf string as a prop
+               * because the books retrived in the search query doesn't have the shelf properties
+               */
+              if (readShelf.filter((b) => b.id === book.id).length)
+                shelf = "read";
+              if (currentlyShelf.includes(book)) shelf = "curr";
+              if (wantShelf.includes(book)) shelf = "want";
+              return (
+                <Book
+                  book={book}
+                  key={book.id}
+                  setRefresh={setRefresh}
+                  shelf={shelf}
+                />
+              );
+            })}
           </ol>
         </div>
       )}
@@ -60,14 +94,3 @@ const Search = () => {
 };
 
 export default Search;
-
-{
-  /*
-              NOTES: The search from BooksAPI is limited to a particular set of search terms.
-              You can find these search terms here:
-              https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-              However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-              you don't find a specific author or title. Every search is limited by search terms.
-            */
-}

@@ -2,18 +2,26 @@ import React from "react";
 //api
 import * as BooksAPI from "../BooksAPI";
 
-const Select = ({ book, setRefresh }) => {
+/**
+ * @description component that handle the select
+ * @param {Object} book
+ * @param {function} setRefresh if set to true triggers the refresh of the main page,to update the books position
+ * @param {string} shelf name of the shelf
+ */
+
+const Select = ({ book, setRefresh, shelf }) => {
+  /**
+   * @description function that changes the position of the book in the database, according to the user's choice
+   */
   const handleShelfChange = (e) => {
-    console.log("loading..");
     BooksAPI.update(book, e.target.value).then(() => {
       setRefresh((prev) => !prev);
-      console.log("end loading");
     });
   };
-
   return (
     <div className="book-shelf-changer">
-      <select defaultValue={book.shelf} onChange={handleShelfChange}>
+      {/* if the shelf string is not defined than the book has a shelf property */}
+      <select defaultValue={shelf || book.shelf} onChange={handleShelfChange}>
         <option value="move" disabled>
           Move to...
         </option>
