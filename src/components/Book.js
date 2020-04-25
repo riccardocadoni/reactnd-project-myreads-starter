@@ -8,8 +8,7 @@ import Select from "./Select";
  * @param {function} setRefresh if set to true triggers the refresh of the main page,to update the books position
  * @param {string} shelf name of the shelf
  */
-const Book = ({ book, setRefresh, shelf }) => {
-  //console.log(book);
+const Book = ({ book, setRefresh }) => {
   return (
     <li>
       <div className="book">
@@ -23,10 +22,12 @@ const Book = ({ book, setRefresh, shelf }) => {
                 book.imageLinks.thumbnail})`,
             }}
           />
-          <Select book={book} setRefresh={setRefresh} shelf={shelf} />
+          <Select book={book} setRefresh={setRefresh} />
         </div>
         <div className="book-title">{book.title}</div>
-        <div className="book-authors">{book.authors}</div>
+        <div className="book-authors">
+          {book.authors && book.authors.join(", ")}
+        </div>
       </div>
     </li>
   );

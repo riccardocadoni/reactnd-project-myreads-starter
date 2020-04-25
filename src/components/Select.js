@@ -9,7 +9,7 @@ import * as BooksAPI from "../BooksAPI";
  * @param {string} shelf name of the shelf
  */
 
-const Select = ({ book, setRefresh, shelf }) => {
+const Select = ({ book, setRefresh }) => {
   /**
    * @description function that changes the position of the book in the database, according to the user's choice
    */
@@ -21,16 +21,16 @@ const Select = ({ book, setRefresh, shelf }) => {
   return (
     <div className="book-shelf-changer">
       {/* if the shelf string is not defined than the book has a shelf property */}
-      <select defaultValue={shelf || book.shelf} onChange={handleShelfChange}>
+      <select defaultValue={book.shelf} onChange={handleShelfChange}>
         <option value="move" disabled>
           Move to...
         </option>
+        <option value="none">None</option>
         <option value="currentlyReading">Currently Reading</option>
         <option value="wantToRead">Want to Read</option>
         <option value="read" defaultValue>
           Read
         </option>
-        <option value="none">None</option>
       </select>
     </div>
   );

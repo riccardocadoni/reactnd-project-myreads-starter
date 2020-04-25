@@ -44,7 +44,7 @@ const Search = ({ setRefresh, currentlyShelf, wantShelf, readShelf }) => {
     },
     [textInput]
   );
-
+  console.log(currentlyShelf);
   return (
     <div className="search-books">
       <div className="search-books-bar">
@@ -67,24 +67,18 @@ const Search = ({ setRefresh, currentlyShelf, wantShelf, readShelf }) => {
         <div className="search-books-results">
           <ol className="books-grid">
             {books.map((book) => {
-              let shelf = null;
               /**
-               * check if the book is currently in one of the personal shelf
-               * if is the case,the component passes the shelf string as a prop
-               * because the books retrived in the search query doesn't have the shelf properties
+               * check if the book is currently in one of the personal shelf,
+               * if is the case,it adds the shelf property
                */
               if (readShelf.filter((b) => b.id === book.id).length)
-                shelf = "read";
-              if (currentlyShelf.includes(book)) shelf = "curr";
-              if (wantShelf.includes(book)) shelf = "want";
-              return (
-                <Book
-                  book={book}
-                  key={book.id}
-                  setRefresh={setRefresh}
-                  shelf={shelf}
-                />
-              );
+                book.shelf = "read";
+              if (currentlyShelf.filter((b) => b.id === book.id).length) {
+                book.shelf = "currentlyReading";
+              }
+              if (wantShelf.filter((b) => b.id === book.id).length)
+                book.shelf = "wantToRead";
+              return <Book book={book} key={book.id} setRefresh={setRefresh} />;
             })}
           </ol>
         </div>
