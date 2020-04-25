@@ -44,7 +44,6 @@ const Search = ({ setRefresh, currentlyShelf, wantShelf, readShelf }) => {
     },
     [textInput]
   );
-  console.log(currentlyShelf);
   return (
     <div className="search-books">
       <div className="search-books-bar">

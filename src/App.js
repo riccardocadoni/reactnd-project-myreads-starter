@@ -24,7 +24,7 @@ const BooksApp = () => {
       let currArr = [];
       let wantArr = [];
       BooksAPI.getAll().then((res) => {
-        res.map((book) => {
+        res.forEach((book) => {
           book.shelf === "read" && readArr.push(book);
           book.shelf === "currentlyReading" && currArr.push(book);
           book.shelf === "wantToRead" && wantArr.push(book);
